@@ -5,7 +5,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 //component 이름은 대문자로 시작해야함
 //최상위 태그가 하나로 묶여 있어야함
-function HeaderTag(){
+function Header(){
   return <header><h1><a href="/">WWW</a></h1></header>
 }
 function Nav(props){
@@ -18,13 +18,21 @@ function Nav(props){
   </ol>
 </nav>
 }
-function ArticleTag(props){
+function Article(props){
   return <article>
   <h2>{props.title}</h2>
   {props.body}
 </article>
 }
-
+function createHandler(){
+  alert("create")
+}
+function updateHandler(){
+  alert("update")
+}
+function deleteHandler(){
+  alert("delete")
+}
 function App() {
   const topics = [
     {id:1, title:'html', body:'html is...'},
@@ -32,14 +40,16 @@ function App() {
   ]
   return (
     <div>
-      <HeaderTag></HeaderTag>
+      <Header onSelect={() => {
+        alert("header!!");
+      }}></Header>
       <Nav data={topics}></Nav>
-      <ArticleTag title="welcome" body="hello, web"></ArticleTag>
+      <Article title="welcome" body="hello, web"></Article>
       <ButtonGroup variant="contained" aria-label="outlined primary button group">
-        <Button variant="outlined">create</Button>
-        <Button variant="outlined">update</Button>
-        <Button variant="outlined">delete</Button>
+        <Button variant="outlined" onClick={createHandler}>create</Button>
+        <Button variant="outlined" onClick={updateHandler}>update</Button>
       </ButtonGroup>
+      <Button variant="outlined" onClick={deleteHandler}>delete</Button>
       
     </div>
   );
