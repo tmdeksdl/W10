@@ -43,7 +43,11 @@ function deleteHandler(){
   alert("delete")
 }
 function App() {
-  let [mode, setMode] = useState('WELCOME');
+  //아래는 '구조 분해 할당'이라는 기술이래
+  // const [a,b] = [A, B]
+  // a = A, b = B
+  const [mode, setMode] = useState('WELCOME');
+  const [id, setId] = useState(null);
   const topics = [
     {id:1, title:'html', body:'html is...'},
     {id:2, title:'css', body:'css is...'},
@@ -52,7 +56,14 @@ function App() {
   if (mode === "WELCOME"){
     content = <Article title="welcome" body="hello, web"></Article>
   } else if (mode === "READ"){
-    content = <Article title="read" body="hello, read"></Article>
+    const topic = topics.filter(e => {
+      if (e.id===id){
+        return true;
+      }
+      else return false
+    })[0]
+    console.log("topic", topic)
+    content = <Article title={topic.title} body={topic.body}></Article>
   }
   return (
     <div>
@@ -61,6 +72,7 @@ function App() {
       }}></Header>
       <Nav data={topics} onSelect={(id) => {
         setMode("READ");
+        setId(id);
       }}></Nav>
       {content}
       <ButtonGroup variant="contained" aria-label="outlined primary button group">
