@@ -7,7 +7,12 @@ import {useState} from 'react'
 //component 이름은 대문자로 시작해야함
 //최상위 태그가 하나로 묶여 있어야함
 function Header(props){
-  return <header><h1><a href="/" onClick={(e)=>{
+  const myStyle = {
+    borderBottom: '1px solid gray',
+    padding: '10px',
+    fontSize: '25px',
+  }
+  return <header style={myStyle}><h1><a href="/" onClick={(e)=>{
     e.preventDefault();
     props.onSelect();
   }}>WWW</a></h1></header>
