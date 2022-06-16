@@ -45,14 +45,30 @@ function App() {
         <Route path="/create" element={<Create onCreate={onCreateHandler()}></Create>}></Route>
         <Route path="/read/:topic_id" element={<Read topics={topics}></Read>}></Route>
       </Routes>
-      <ButtonGroup>
-        <Button component={Link} to="/create" variant="outlined" onClick={createHandler()}>Create</Button>        
-        <Button component={Link} to="/update"variant="outlined">Update</Button>
-      </ButtonGroup>
-      <Button variant="outlined" onClick={deleteHandler()}>Delete</Button>
+      
+      <Routes>
+        {['/', '/read/:topic_id', '/update/:topic_id'].map(path => {
+            return <Route key={path} path={path} element= {<Control></Control>}></Route>
+        })}
+      </Routes>
     </div>
   );
-
+  function Control() {
+      const params = useParams()
+      const id = Number(params.topic_id)
+      let contextUI = null;
+      if (id){
+        contextUI = <>
+          <Button component={Link} to="/update"variant="outlined">Update</Button>
+          <Button variant="outlined" onClick={deleteHandler()}>Delete</Button>
+        </>
+      }
+      return <>
+       <Button component={Link} to="/create" variant="outlined" onClick={createHandler()}>Create</Button>        
+        {contextUI}
+      </>
+      
+  }
   function onCreateHandler() {
     return (title, body) => {
       const newTopic = { id: nextId, title, body };
