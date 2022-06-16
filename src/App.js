@@ -14,29 +14,28 @@ const HeaderStyled = styled(Header)`
     color:red;
 `;
 
+function Read(props) {
+  const params = useParams();
+  const id = Number(params.topic_id);
+  const topic = props.topics.filter(e=>{
+    if(e.id === id) {
+      return true;
+    } else {
+      return false;
+    }
+  })[0];
+  return <Article title={topic.title} body={topic.body}></Article>
+}
 function App() {
-  const [mode,setMode] = useState('WELCOME');
-  const [id, setId] = useState(null);
+  const [mode,setMode] = useState('WELCOME'); //todo 삭제예정
+  const [id, setId] = useState(null); //todo 삭제예정
   const [nextId, setNextId] = useState(3);
   const [topics, setTopics] = useState([
     {id:1, title:'html', body:'html is ...'},
     {id:2, title:'css', body:'css is ...'},
   ]);
   
-  let content = null;
-  if(mode === 'WELCOME'){
-    content = <Article title="Welcome" body="Hello, WEB!"></Article>
-  } else if(mode === 'READ'){
-    const topic = topics.filter(e=>{
-      if(e.id === id) {
-        return true;
-      } else {
-        return false;
-      }
-    })[0];
-    content = <Article title={topic.title} body={topic.body}></Article>
-  }
-
+  
   return (
     <div>
       <HeaderStyled onSelect={headerHandler()}></HeaderStyled>
@@ -54,18 +53,6 @@ function App() {
     </div>
   );
 
-  function Read(props) {
-    const params = useParams();
-    const id = Number(params.topic_id);
-    const topic = props.topics.filter(e=>{
-      if(e.id === id) {
-        return true;
-      } else {
-        return false;
-      }
-    })[0];
-    return <Article title={topic.title} body={topic.body}></Article>
-  }
   function onCreateHandler() {
     return (title, body) => {
       const newTopic = { id: nextId, title, body };
